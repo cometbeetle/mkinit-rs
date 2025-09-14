@@ -1,6 +1,8 @@
 mod codegen;
 mod parser;
 
+use codegen::InitMaker;
+
 use clap::Parser;
 use ruff_python_ast::PythonVersion;
 use std::path::PathBuf;
@@ -35,16 +37,16 @@ fn main() {
         }
     };
 
-    match codegen::process_project(
-        &PathBuf::from(args.dir),
+    let init_maker = InitMaker::new(
+        PathBuf::from(args.dir),
         python_version,
         args.respect_all,
         args.sort_imports,
         args.verbose,
-    ) {
-        Ok(_) => {}
+    );
+
+    match init_maker.make_init() {
+        Ok(_) => (),
         Err(error) => eprintln!("{}", error),
     }
-
-    //let _ = codegen::process_project(&PathBuf::from("./examples"), PythonVersion::PY312);
 }
