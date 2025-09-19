@@ -139,6 +139,8 @@ impl InitMaker {
         //       in the generated init files; will involve parsing __protected__, __private__, etc.
         //       (see the current mkinit implementation)
 
+        // TODO: Replace some single-armed match statements with "if let" construction.
+
         // Collect names to put in the __all__ variable.
         let mut all: Vec<String> = vec![];
 
